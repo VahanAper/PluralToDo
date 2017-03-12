@@ -1,18 +1,19 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
 import {
-  Platform,
-  StatusBar,
-  StyleSheet,
-  View,
+  // Platform,
+  // StatusBar,
+  // StyleSheet,
+  // View,
 } from 'react-native';
-import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
+// import { NavigationProvider, StackNavigation } from '@expo/ex-navigation';
 import { FontAwesome } from '@expo/vector-icons';
 
-import Router from './navigation/Router';
+// import Router from './navigation/Router';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
 import expoWordmark from './assets/images/expo-wordmark.png';
 import spaceMonoRegular from './assets/fonts/SpaceMono-Regular.ttf';
+import TaskList from './components/TaskList';
 
 class PluralToDo extends Component {
   state = {
@@ -20,12 +21,19 @@ class PluralToDo extends Component {
     todos: [
       {
         task: 'Learn React Native',
+      },
+      {
+        task: 'Learn Redux',
       }
     ],
   };
 
   componentWillMount() {
     this._loadAssetsAsync();
+  }
+
+  onAddStarted() {
+    console.log('on add started...');
   }
 
   async _loadAssetsAsync() {
@@ -51,34 +59,40 @@ class PluralToDo extends Component {
   render() {
     if (this.state.appIsReady) {
       return (
-        <View style={styles.container}>
-          <NavigationProvider router={Router}>
-            <StackNavigation
-              id="root"
-              initialRoute={Router.getRoute('rootNavigation')}
-            />
-          </NavigationProvider>
-
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          {Platform.OS === 'android' &&
-            <View style={styles.statusBarUnderlay} />}
-        </View>
+        <TaskList
+          onAddStarted={this.onAddStarted.bind(this)}
+          todos={this.state.todos}
+        />
       );
+      // return (
+      //   <View style={styles.container}>
+      //     <NavigationProvider router={Router}>
+      //       <StackNavigation
+      //         id="root"
+      //         initialRoute={Router.getRoute('rootNavigation')}
+      //       />
+      //     </NavigationProvider>
+      //
+      //     {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      //     {Platform.OS === 'android' &&
+      //       <View style={styles.statusBarUnderlay} />}
+      //   </View>
+      // );
     }
 
     return <Expo.Components.AppLoading />;
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  statusBarUnderlay: {
-    height: 24,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//   },
+//   statusBarUnderlay: {
+//     height: 24,
+//     backgroundColor: 'rgba(0,0,0,0.2)',
+//   },
+// });
 
 Expo.registerRootComponent(PluralToDo);
