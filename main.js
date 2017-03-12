@@ -1,7 +1,6 @@
 import Expo from 'expo';
 import React, { Component } from 'react';
 import {
-  AppRegistry,
   Platform,
   StatusBar,
   StyleSheet,
@@ -12,10 +11,17 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import Router from './navigation/Router';
 import cacheAssetsAsync from './utilities/cacheAssetsAsync';
+import expoWordmark from './assets/images/expo-wordmark.png';
+import spaceMonoRegular from './assets/fonts/SpaceMono-Regular.ttf';
 
 class PluralToDo extends Component {
   state = {
     appIsReady: false,
+    todos: [
+      {
+        task: 'Learn React Native',
+      }
+    ],
   };
 
   componentWillMount() {
@@ -25,10 +31,10 @@ class PluralToDo extends Component {
   async _loadAssetsAsync() {
     try {
       await cacheAssetsAsync({
-        images: [require('./assets/images/expo-wordmark.png')],
+        images: [expoWordmark],
         fonts: [
           FontAwesome.font,
-          { 'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf') },
+          { 'space-mono': spaceMonoRegular },
         ],
       });
     } catch (e) {
@@ -58,9 +64,9 @@ class PluralToDo extends Component {
             <View style={styles.statusBarUnderlay} />}
         </View>
       );
-    } else {
-      return <Expo.Components.AppLoading />;
     }
+
+    return <Expo.Components.AppLoading />;
   }
 }
 

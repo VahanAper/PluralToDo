@@ -1,0 +1,24 @@
+{
+	"extends": "rallycoding",
+  "rules": {
+    "arrow-body-style": 0,
+    "quote-props": [
+      "error",
+      "as-needed", {
+        "keywords": true,
+        "unnecessary": false
+      }
+    ],
+    "no-throw-literal": 0,
+    "no-underscore-dangle": [
+      "error", { "allowAfterThis": true }
+    ],
+    no-unused-expressions: [
+      "error", { "allowShortCircuit": true }
+    ]
+  },
+  "env": {
+    "node": true,
+    "browser": true
+  }
+}
