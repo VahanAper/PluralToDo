@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
@@ -16,23 +16,45 @@ class TaskForm extends Component {
     };
   }
 
+  onChange(text) {
+    this.task = text;
+  }
+
+  onAddPressed() {
+    this.props.onAdd(this.task);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <TextInput
+          onChangeText={this.onChange.bind(this)}
           underlineColorAndroid={'transparent'}
           style={styles.input}
         />
-        <TouchableHighlight style={styles.button}>
+
+        <TouchableHighlight
+          onPress={this.onAddPressed.bind(this)}
+          style={styles.button}
+        >
           <Text style={styles.buttonText}>Add</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={[styles.button, styles.cancelButton]}>
+
+        <TouchableHighlight
+          onPress={this.props.onCancel}
+          style={[styles.button, styles.cancelButton]}
+        >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
+
+TaskForm.propTypes = {
+  onCancel: PropTypes.func.isRequired,
+  onAdd: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
   container: {

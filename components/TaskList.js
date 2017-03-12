@@ -21,9 +21,18 @@ class TaskList extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    const dataSource = this.state.dataSource.cloneWithRows(nextProps.todos);
+
+    this.setState({ dataSource });
+  }
+
   renderRow(todo) {
     return (
-      <TaskRow todo={todo} />
+      <TaskRow
+        onDone={this.props.onDone}
+        todo={todo}
+      />
     );
   }
 
@@ -48,6 +57,7 @@ class TaskList extends Component {
 }
 
 TaskList.propTypes = {
+  onDone: PropTypes.func.isRequired,
   onAddStarted: PropTypes.func.isRequired,
   todos: PropTypes.arrayOf(PropTypes.object).isRequired
 };

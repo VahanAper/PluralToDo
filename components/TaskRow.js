@@ -2,22 +2,35 @@ import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
+  TouchableHighlight,
   StyleSheet
 } from 'react-native';
 
 class TaskRow extends Component {
+  onDonePressed() {
+    this.props.onDone(this.props.todo);
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.label}>
           {this.props.todo.task}
         </Text>
+
+        <TouchableHighlight
+          onPress={this.onDonePressed.bind(this)}
+          style={styles.doneButton}
+        >
+          <Text>Done</Text>
+        </TouchableHighlight>
       </View>
     );
   }
 }
 
 TaskRow.propTypes = {
+  onDone: PropTypes.func.isRequired,
   todo: PropTypes.shape({
     task: PropTypes.string.isRequired
   }).isRequired
@@ -39,6 +52,11 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     fontWeight: '300'
+  },
+  doneButton: {
+    borderRadius: 5,
+    backgroundColor: '#EAEAEA',
+    padding: 10
   }
 });
 
